@@ -1,10 +1,11 @@
 package com.shelter.bot.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.Accessors;
 
-
 import javax.persistence.*;
+import java.util.Set;
 
 
 @Setter
@@ -14,15 +15,19 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-@Table(schema = "public", name = "users")
+@Table(name = "users")
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "chat_id", nullable = false)
-    private String chatId;
+    private Long chatId;
 
-    @Column(name = "username", nullable = false)
-    private String username;
+    @Column(name = "name", nullable = false)
+    private String name;
+
+    @JsonIgnore
+    @OneToMany()
+    Set<PetEntity> pets;
 }
